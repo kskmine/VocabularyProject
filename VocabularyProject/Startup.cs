@@ -1,4 +1,6 @@
 using DataAccessLayer;
+using DataAccessLayer.Interfaces;
+using DataAccessLayer.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -28,6 +30,7 @@ namespace VocabularyProject
             services.AddDbContext<VocabularyDbContext>(options =>
              options.UseSqlServer(Configuration.GetConnectionString("MssqlConnection")));
             services.AddControllersWithViews();
+            services.AddScoped<ILanguageRepository, LanguageRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
