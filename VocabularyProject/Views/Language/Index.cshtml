@@ -4,44 +4,55 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>LANGUAGE PAGE</h1>
 
 <p>
-    <a asp-action="Edit">Create New</a>
+    <a asp-action="Edit">Yeni Dil Ekle</a>
 </p>
-<table class="table">
-    <thead>
+
+<div>
+    <h2>Dil</h2>
+
+    <table>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Code)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th></th>
+            <th>ID</th>
+            <th>DIL KODU</th>
+            <th>DILIN ADI</th>
+            <th style="text-align:center ">EDIT-DETAILS-DELETE </th>
         </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Code)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new {  id=item.Id }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+        @{
+            foreach (LanguageViewModel item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Code</td>
+                    <td>@item.Name</td>
+                    <td>
+                        <div class="text-center">
+                            <a asp-route-id="@item.Id" class="btn btn-info" asp-action="Edit">EDIT</a>
+                            <a asp-route-id="@item.Id" class="btn btn-info" asp-action="Details">DETAILS</a>
+                            <a class="btn btn-warning " style="margin-left:5px" asp-route-id="@item.Id" asp-action="Delete">DELETE</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        }
+        <</table>
+    </div>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #eff6fe;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #eff6fe;
+        }
+    </style>

@@ -4,50 +4,59 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>WORD MEANING PAGE</h1>
 
 <p>
-    <a asp-action="Edit">Create New</a>
+    <a asp-action="Edit">Kelimeye Yeni Anlam Ekle</a>
 </p>
-<table class="table">
-    <thead>
+
+<div>
+    <h2>Kelime Anlamı</h2>
+
+    <table>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Meaning)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LangId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.WordDefinitionId)
-            </th>
-            <th></th>
+            <th>ID</th>
+            <th>KELIMENIN ANLAMI</th>
+            <th>DIL ID</th>
+            <th>KELIMENIN ANLAMI ID</th>
+            <th style="text-align:center ">EDIT-DETAILS-DELETE </th>
         </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Meaning)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LangId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.WordDefinitionId)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new {  id=item.Id })
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+        @{
+            foreach (WordMeaningViewModel item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Meaning</td>
+                    <td>@item.LangId</td>
+                    <td>@item.WordDefinitionId</td>
+                    <td>
+                        <div class="text-center">
+                            <a asp-route-id="@item.Id" class="btn btn-info" asp-action="Edit">EDIT</a>
+                            <a asp-route-id="@item.Id" class="btn btn-info" asp-action="Details">DETAILS</a>
+                            <a class="btn btn-warning " style="margin-left:5px" asp-route-id="@item.Id" asp-action="Delete">DELETE</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        }
+        <
+    </table>
+</div>
+
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #eff6fe;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #eff6fe;
+    }
+</style>
