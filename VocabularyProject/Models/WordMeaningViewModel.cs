@@ -13,9 +13,9 @@ namespace VocabularyProject.Models
         public string Meaning { get; set; }
         public int LangId { get; set; }
         public int? WordDefinitionId { get; set; }
-        [ForeignKey("LangId")]
-        public virtual Language Lang { get; set; }
-        [ForeignKey("WordDefinitionId")]
-        public virtual WordDefinition WordDef { get; set; }
+        //[ForeignKey("LangId")]
+        //public virtual Language Lang { get; set; }
+        //[ForeignKey("WordDefinitionId")]
+        //public virtual WordDefinition WordDef { get; set; }
     }
 }

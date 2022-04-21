@@ -12,7 +12,7 @@ namespace VocabularyProject.Models
         public int Id { get; set; }
         public string Word { get; set; }
         public int LangId { get; set; }
-        [ForeignKey("LangId")]
-        public virtual Language Lang { get; set; }
+        //[ForeignKey("LangId")]
+        //public virtual Language Lang { get; set; }
     }
 }
