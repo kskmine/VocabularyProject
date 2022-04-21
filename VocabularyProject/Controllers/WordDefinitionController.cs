@@ -25,6 +25,7 @@ namespace VocabularyProject.Controllers
         {
             List<WordDefinitionViewModel> model = new List<WordDefinitionViewModel>();
             List<WordDefinition> liste = _repository.List();
+            List<Language> ls = _langRepository.List();
 
             foreach (WordDefinition item in liste)
             {
