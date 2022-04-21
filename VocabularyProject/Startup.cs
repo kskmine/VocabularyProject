@@ -31,6 +31,8 @@ namespace VocabularyProject
              options.UseSqlServer(Configuration.GetConnectionString("MssqlConnection")));
             services.AddControllersWithViews();
             services.AddScoped<ILanguageRepository, LanguageRepository>();
+            services.AddScoped<IWordDefinitionRepository, WordDefinitionRepository>();
+            services.AddScoped<IWordMeaningRepository, WordMeaningRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
