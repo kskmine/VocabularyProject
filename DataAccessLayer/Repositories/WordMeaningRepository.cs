@@ -9,42 +9,42 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Repositories
 {
-    public class WordMeaningRepository: IWordMeaningRepository
+    public class WordMeaningRepository: RepositoryBase<WordMeaning>,IWordMeaningRepository
     {
-        VocabularyDbContext _context; 
-        public WordMeaningRepository(VocabularyDbContext context)
+      
+        public WordMeaningRepository(VocabularyDbContext context):base(context)
         {
-            _context = context;
+            
         }
 
-        public void Add(WordMeaning entity)
-        {
-            _context.Set<WordMeaning>().Add(entity);
-            _context.SaveChanges();
-        }
+        //public void Add(WordMeaning entity)
+        //{
+        //    _context.Set<WordMeaning>().Add(entity);
+        //    _context.SaveChanges();
+        //}
 
-        public void Delete(int id)
-        {
-            var silinecek = GetById(id);
-            _context.Set<WordMeaning>().Remove(silinecek);
-            _context.SaveChanges();
-        }
+        //public void Delete(int id)
+        //{
+        //    var silinecek = GetById(id);
+        //    _context.Set<WordMeaning>().Remove(silinecek);
+        //    _context.SaveChanges();
+        //}
 
-        public WordMeaning GetById(int id)
-        {
-            return _context.Set<WordMeaning>().Find(id);
-        }
+        //public WordMeaning GetById(int id)
+        //{
+        //    return _context.Set<WordMeaning>().Find(id);
+        //}
 
-        public List<WordMeaning> List()
-        {
-            return _context.Set<WordMeaning>().ToList();
-        }
+        //public List<WordMeaning> List()
+        //{
+        //    return _context.Set<WordMeaning>().ToList();
+        //}
 
-        public void Update(WordMeaning entity)
-        {
-            _context.Attach(entity);
-            _context.Entry(entity).State = EntityState.Modified;
-            _context.SaveChanges();
-        }
+        //public void Update(WordMeaning entity)
+        //{
+        //    _context.Attach(entity);
+        //    _context.Entry(entity).State = EntityState.Modified;
+        //    _context.SaveChanges();
+        //}
     }
 }

@@ -13,10 +13,12 @@ namespace VocabularyProject.Controllers
     public class WordDefinitionController : Controller
     {
         IWordDefinitionRepository _repository;
+        ILanguageRepository _langRepository;
 
-        public WordDefinitionController(IWordDefinitionRepository repository)
+        public WordDefinitionController(IWordDefinitionRepository repository, ILanguageRepository langRepository)
         {
             _repository = repository;
+            _langRepository = langRepository;
         }
         // GET: WordDefinitionController
         public ActionResult Index()
@@ -30,8 +32,11 @@ namespace VocabularyProject.Controllers
                 {
                     Id = item.Id,
                     Word = item.Word,
-                    LangId = item.LangId
+                    LangId = item.LangId,
+                    LangText = item.Lang.Code,
                 };
+
+
                 model.Add(wdvm);
             }
             return View(model);

@@ -9,43 +9,49 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer.Repositories
 {
-    public class WordDefinitionRepository: IWordDefinitionRepository
+    public class WordDefinitionRepository : RepositoryBase<WordDefinition>, IWordDefinitionRepository
     {
 
-         VocabularyDbContext _context;
-        public WordDefinitionRepository(VocabularyDbContext context)
+         //VocabularyDbContext _context;
+        public WordDefinitionRepository(VocabularyDbContext context):base(context)
         {
-            _context = context;
+           
         }
 
-        public void Add(WordDefinition entity)
+        public override List<WordDefinition> List()
         {
-            _context.Set<WordDefinition>().Add(entity);
-            _context.SaveChanges();
+            var liste = _context.Set<WordDefinition>().Include(c=>c.Lang).ToList();
+            return liste;
         }
 
-        public void Delete(int id)
-        {
-            var silinecek = GetById(id);
-            _context.Set<WordDefinition>().Remove(silinecek);
-            _context.SaveChanges();
-        }
+        //public void Add(WordDefinition entity)
+        //{
+        //    _context.Set<WordDefinition>().Add(entity);
+        //    _context.SaveChanges();
+        //}
 
-        public WordDefinition GetById(int id)
-        {
-            return _context.Set<WordDefinition>().Find(id);
-        }
+        //public void Delete(int id)
+        //{
+        //    var silinecek = GetById(id);
+        //    _context.Set<WordDefinition>().Remove(silinecek);
+        //    _context.SaveChanges();
+        //}
 
-        public List<WordDefinition> List()
-        {
-            return _context.Set<WordDefinition>().ToList();
-        }
+        //public WordDefinition GetById(int id)
+        //{
+        //    return _context.Set<WordDefinition>().Find(id);
+        //}
 
-        public void Update(WordDefinition entity)
-        {
-            _context.Attach(entity);
-            _context.Entry(entity).State = EntityState.Modified;
-            _context.SaveChanges();
-        }
+        //public List<WordDefinition> List()
+        //{
+        //    return _context.Set<WordDefinition>().ToList();
+        //}
+
+        //public void Update(WordDefinition entity)
+        //{
+        //    _context.Attach(entity);
+        //    _context.Entry(entity).State = EntityState.Modified;
+        //    _context.SaveChanges();
+        //}
     }
 }

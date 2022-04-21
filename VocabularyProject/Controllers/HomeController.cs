@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DataAccessLayer.Entities;
+using DataAccessLayer.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -12,6 +14,7 @@ namespace VocabularyProject.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        ITestRepository _repository;
 
         public HomeController(ILogger<HomeController> logger)
         {
@@ -20,11 +23,22 @@ namespace VocabularyProject.Controllers
 
         public IActionResult Index()
         {
+     //       _repository.Add(new Test(){ TestName="Test1"});
+
+
+            ///Listeler ne tipte oluşturursan o tipte çağırmanı zorunlu kılar, Generic Yapıcaz
+            //List<string> stringList = new List<string>();
+            //stringList.Add("asaf");
+
+            //List<int> intList = new List<int>();
+            //intList.Add(52634);
+
             return View();
         }
 
         public IActionResult Privacy()
         {
+            var liste = _repository.List();
             return View();
         }
 

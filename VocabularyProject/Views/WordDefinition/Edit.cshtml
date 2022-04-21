@@ -12,14 +12,16 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                @if (Model.Id > 0)
-                {
+
+            @if (Model.Id > 0)
+            {
+                <div class="form-group">
                     <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" class="form-control" />
-                <span asp-validation-for="Id" class="text-danger"></span>
-                }
-            </div>
+                    <input asp-for="Id" class="form-control" />
+                    <span asp-validation-for="Id" class="text-danger"></span>
+                </div>
+            }
+
             <div class="form-group">
                 <label asp-for="Word" class="control-label"></label>
                 <input asp-for="Word" class="form-control" />
@@ -27,7 +29,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="LangId" class="control-label"></label>
-                <input asp-for="LangId" class="form-control" />
+                @*<input asp-for="LangId" class="form-control" />*@
+            <select>
+                <option value="7">Tr</option>
+                <option value="5">Eng</option>
+                @*@foreach (var item in List<Language>ViewBag.Lang)*@
+            </select>
                 <span asp-validation-for="LangId" class="text-danger"></span>
             </div>
             <div class="form-group">
