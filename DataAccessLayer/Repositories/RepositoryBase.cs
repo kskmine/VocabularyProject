@@ -17,7 +17,7 @@ namespace DataAccessLayer.Repositories
         public virtual void Add(T entity)
         {
             _context.Set<T>().Add(entity);
-            _context.SaveChanges();
+              _context.SaveChanges();
         }
 
         public virtual void Delete(int id)

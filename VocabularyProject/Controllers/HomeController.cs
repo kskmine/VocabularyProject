@@ -16,14 +16,15 @@ namespace VocabularyProject.Controllers
         private readonly ILogger<HomeController> _logger;
         ITestRepository _repository;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, ITestRepository repository)
         {
+            _repository = repository;
             _logger = logger;
         }
 
         public IActionResult Index()
         {
-     //       _repository.Add(new Test(){ TestName="Test1"});
+            //       _repository.Add(new Test(){ TestName="Test1"});
 
 
             ///Listeler ne tipte oluşturursan o tipte çağırmanı zorunlu kılar, Generic Yapıcaz
@@ -32,6 +33,7 @@ namespace VocabularyProject.Controllers
 
             //List<int> intList = new List<int>();
             //intList.Add(52634);
+            _repository.Add(new DataAccessLayer.Entities.Test() { TestName = "test1" });
 
             return View();
         }

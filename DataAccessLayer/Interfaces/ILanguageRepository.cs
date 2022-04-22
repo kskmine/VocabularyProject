@@ -8,12 +8,13 @@ using DataAccessLayer.Repositories;
 
 namespace DataAccessLayer.Interfaces
 {
-   public interface ILanguageRepository : IRepositoryBase<Language>
+    public interface ILanguageRepository : IRepositoryBase<Language>
     {
         //public List<Language> List();
         //public Language GetById(int id);
         //public void Add(Language entity);
         //public void Update(Language entity);
         //public void Delete(int id);
+        
     }
 }

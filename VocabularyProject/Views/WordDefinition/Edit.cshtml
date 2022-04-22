@@ -27,14 +27,16 @@
                 <input asp-for="Word" class="form-control" />
                 <span asp-validation-for="Word" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="LangId" class="control-label"></label>
-                <input asp-for="LangId" class="form-control" />
-            <!--<select>
-                <option value="7">Tr</option>
-                <option value="5">Eng</option>-->
-                @*@foreach (var item in List<Language>ViewBag.Lang)*@
-            <!--</select>-->
+                @*  <input asp-for="LangId" class="form-control" />*@
+                <select class="form-control" id="LangId" name="LangId">
+                    @foreach (var item in ViewBag.Langs)
+                    {
+                        <option title="@item.Name" value="@item.Id">@item.Code</option>
+                    }
+                </select>
                 <span asp-validation-for="LangId" class="text-danger"></span>
             </div>
             <div class="form-group">

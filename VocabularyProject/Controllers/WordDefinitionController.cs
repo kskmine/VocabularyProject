@@ -24,51 +24,25 @@ namespace VocabularyProject.Controllers
         public ActionResult Index()
         {
             List<WordDefinitionViewModel> model = new List<WordDefinitionViewModel>();
+
             List<WordDefinition> liste = _repository.List();
-            List<Language> ls = _langRepository.List();
 
             foreach (WordDefinition item in liste)
             {
-                WordDefinitionViewModel wdvm = new WordDefinitionViewModel()
+                WordDefinitionViewModel lwm = new WordDefinitionViewModel()
                 {
                     Id = item.Id,
                     Word = item.Word,
                     LangId = item.LangId,
-                    LangText = item.Lang.Code,
+                    LangCode = item.Lang.Code,
+                    LangName = item.Lang.Name
                 };
 
-
-                model.Add(wdvm);
+                model.Add(lwm);
             }
             return View(model);
         }
 
-        // GET: WordDefinitionController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: WordDefinitionController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: WordDefinitionController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
 
         // GET: WordDefinitionController/Edit/5
         public ActionResult Edit(int? id)
@@ -76,11 +50,14 @@ namespace VocabularyProject.Controllers
             WordDefinitionViewModel model = new WordDefinitionViewModel();
             if (id.HasValue && id > 0)
             {
-                WordDefinition wdefinition = _repository.GetById(id.Value);
-                model.Id = wdefinition.Id;
-                model.Word = wdefinition.Word;
-                model.LangId = wdefinition.LangId;
+                WordDefinition wd = _repository.GetById(id.Value);
+
+                model.Id = wd.Id;
+                model.Word = wd.Word;
+                model.LangId = wd.LangId;
             }
+            ViewBag.Langs = _langRepository.List();
+
             return View(model);
         }
 

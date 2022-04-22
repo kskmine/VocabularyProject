@@ -17,6 +17,17 @@ namespace DataAccessLayer.Repositories
             
         }
 
+        public override WordMeaning GetById(int id)
+        {
+            return _context.Set<WordMeaning>().Include(c => c.WordDef).Include(c => c.Lang).First(c => c.Id == id);
+        }
+
+        public override List<WordMeaning> List()
+        {
+            return _context.Set<WordMeaning>().Include(c => c.WordDef).Include(c => c.Lang).ToList();
+        }
+
+
         //public void Add(WordMeaning entity)
         //{
         //    _context.Set<WordMeaning>().Add(entity);

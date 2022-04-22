@@ -5,7 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
+using VocabularyProject.Helpers;
 using VocabularyProject.Models;
 
 namespace VocabularyProject.Controllers
@@ -13,56 +15,26 @@ namespace VocabularyProject.Controllers
     public class WordMeaningController : Controller
     {
         IWordMeaningRepository _repository;
+        IWordDefinitionRepository _wordDefinitionRepository;
+        ILanguageRepository _languageRepository;
 
-        public WordMeaningController(IWordMeaningRepository repository)
+        public WordMeaningController(IWordMeaningRepository repository, IWordDefinitionRepository wordDefinitionRepository,
+            ILanguageRepository languageRepository)
         {
             _repository = repository;
+            _wordDefinitionRepository = wordDefinitionRepository;
+            _languageRepository = languageRepository;
         }
         // GET: WordMeaningController
         public ActionResult Index()
         {
             List<WordMeaningViewModel> model = new List<WordMeaningViewModel>();
+
             List<WordMeaning> liste = _repository.List();
+            var serializedText = JsonSerializer.Serialize(liste);
+            model = JsonSerializer.Deserialize<List<WordMeaningViewModel>>(serializedText);
 
-            foreach (WordMeaning item in liste)
-            {
-                WordMeaningViewModel wmvm = new WordMeaningViewModel()
-                {
-                    Id = item.Id,
-                    Meaning = item.Meaning,
-                    LangId = item.LangId,
-                    WordDefinitionId=item.WordDefinitionId
-                };
-                model.Add(wmvm);
-            }
             return View(model);
-        }
-
-        // GET: WordMeaningController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: WordMeaningController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: WordMeaningController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
         }
 
         // GET: WordMeaningController/Edit/5
@@ -71,12 +43,23 @@ namespace VocabularyProject.Controllers
             WordMeaningViewModel model = new WordMeaningViewModel();
             if (id.HasValue && id > 0)
             {
-                WordMeaning wmeaning = _repository.GetById(id.Value);
-                model.Id = wmeaning.Id;
-                model.Meaning = wmeaning.Meaning;
-                model.LangId = wmeaning.LangId;
-                model.WordDefinitionId = wmeaning.WordDefinitionId;
+                WordMeaning wd = _repository.GetById(id.Value);
+                var serializedText = JsonSerializer.Serialize(wd);
+                model = JsonSerializer.Deserialize<WordMeaningViewModel>(serializedText);
             }
+
+            List<Language> languages = _languageRepository.List();
+            //string langsText = JsonSerializer.Serialize(languages);
+            //List<LanguageViewModel> Langs = JsonSerializer.Deserialize<List<LanguageViewModel>>(langsText);
+
+            List<WordDefinition> wordDefinitions = _wordDefinitionRepository.List();
+            //string wordTexts= JsonSerializer.Serialize(wordDefinitions);
+            //List<WordDefinitionViewModel> wordDefs = JsonSerializer.Deserialize<List<WordDefinitionViewModel>>(wordTexts);
+
+            model.Languages = Helper.Convert<List<LanguageViewModel>, List<Language>>(languages);
+            model.WordDefinitions = Helper.Convert<List<WordDefinitionViewModel>, List<WordDefinition>>(wordDefinitions); ;
+
+
             return View(model);
         }
 
@@ -85,14 +68,11 @@ namespace VocabularyProject.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(WordMeaningViewModel model)
         {
-            WordMeaning entity = new WordMeaning()
-            {
+            WordMeaning entity = new WordMeaning();
 
-                Id = model.Id,
-                Meaning = model.Meaning,
-                LangId = model.LangId,
-                WordDefinitionId=model.WordDefinitionId,
-            };
+            var serilazedText = JsonSerializer.Serialize(model);
+            entity = JsonSerializer.Deserialize<WordMeaning>(serilazedText);
+
             if (entity.Id > 0)
             {
                 _repository.Update(entity);
@@ -109,21 +89,6 @@ namespace VocabularyProject.Controllers
         {
             _repository.Delete(id);
             return RedirectToAction("Index");
-        }
-
-        // POST: WordMeaningController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
         }
     }
 }

@@ -27,12 +27,16 @@
                 <tr>
                     <td>@item.Id</td>
                     <td>@item.Meaning</td>
-                    <td>@item.LangId</td>
-                    <td>@item.WordDefinitionId</td>
+                    @*<td>@item.LangId</td>
+        <td>@item.WordDefinitionId</td>*@
+                    <td>@item.SelectedWordDefinition.Word</td>
+                    <td title="@item.SelectedLang.Name">
+                        @Html.DisplayFor(modelItem => item.SelectedLang.Code)
+                    </td>
                     <td>
                         <div class="text-center">
                             <a asp-route-id="@item.Id" class="btn btn-info" asp-action="Edit">EDIT</a>
-                            <a asp-route-id="@item.Id" class="btn btn-info" asp-action="Details">DETAILS</a>
+                            @*<a asp-route-id="@item.Id" class="btn btn-info" asp-action="Details">DETAILS</a>*@
                             <a class="btn btn-warning " style="margin-left:5px" asp-route-id="@item.Id" asp-action="Delete">DELETE</a>
                         </div>
                     </td>

@@ -22,6 +22,7 @@ namespace VocabularyProject.Controllers
         public ActionResult Index()
         {
             List<LanguageViewModel> model = new List<LanguageViewModel>();
+
             List<Language> liste = _repository.List();
 
             foreach (Language item in liste)
@@ -32,7 +33,8 @@ namespace VocabularyProject.Controllers
                     Name = item.Name,
                     Code = item.Code
                 };
-                 model.Add(lwm);
+
+                model.Add(lwm);
             }
             return View(model);
 
@@ -70,13 +72,15 @@ namespace VocabularyProject.Controllers
         public ActionResult Edit(int? id)
         {
             LanguageViewModel model = new LanguageViewModel();
-            if (id.HasValue&&id>0)
+            if (id.HasValue && id > 0)
             {
                 Language lang = _repository.GetById(id.Value);
+
                 model.Id = lang.Id;
                 model.Code = lang.Code;
                 model.Name = lang.Name;
             }
+
             return View(model);
         }
 
