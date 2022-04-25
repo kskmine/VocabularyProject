@@ -10,6 +10,7 @@ namespace DataAccessLayer.Interfaces
 {
     public interface IWordDefinitionRepository:IRepositoryBase<WordDefinition>
     {
+        public List<WordDefinition> List(string searchKeyword)
         //public List<WordDefinition> List();
         //public WordDefinition GetById(int id);
         //public void Add(WordDefinition entity);

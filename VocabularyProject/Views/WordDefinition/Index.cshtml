@@ -5,10 +5,21 @@
 }
 
 <h1>WORD DEFINITION PAGE</h1>
+<div class="row">
+    <div class="col-md-4">
+        <p>
+            <a asp-action="Edit">Yeni Kelime Ekle</a>
+        </p>
+    </div>
+    @*<div class="col-md-6"><input type="text" class="form-control"></div>
+    <div class="col-md-2"><button type="button" class="btn btn"></div>*@
+    <div class="example" action="/action_page.php">
+        <input type="text" placeholder="Search.." name="search">
+        <button type="submit"><i class="fa fa-search"></i></button>
+    </div>
+</div>
 
-<p>
-    <a asp-action="Edit">Yeni Kelime Ekle</a>
-</p>
+
 <div>
     <h2>Kelime</h2>
 
@@ -17,7 +28,7 @@
             <th>ID</th>
             <th>KELIME</th>
             <th>DIL ID'Sİ</th>
-            <th style="text-align:center ">EDIT-DETAILS-DELETE </th>
+            <th style="text-align:center ">EDIT-DELETE </th>
         </tr>
         @{int counter = 0; }
         @{
@@ -71,10 +82,44 @@
         function showHideDetail(elemId) {
             $("#" + elemId).toggle();
         }
+        function refresh() {
+            var searchKeyword = $('#searchKeyword').val();
+         //   window.location.href = '/WordDefinition/Index?searchKeyword=' + searchKeyword
+        }
     </script>
 }
 
 <style>
+    form.example input[type=text] {
+        padding: 10px;
+        font-size: 17px;
+        border: 1px solid grey;
+        float: left;
+        width: 80%;
+        background: #f1f1f1;
+    }
+
+    form.example button {
+        float: left;
+        width: 20%;
+        padding: 10px;
+        background: #2196F3;
+        color: white;
+        font-size: 17px;
+        border: 1px solid grey;
+        border-left: none;
+        cursor: pointer;
+    }
+
+        form.example button:hover {
+            background: #0b7dda;
+        }
+
+    form.example::after {
+        content: "";
+        clear: both;
+        display: table;
+    }
     #wordsTable {
         font-family: Arial, Helvetica, sans-serif;
         border-collapse: collapse;
@@ -101,7 +146,7 @@
             background-color: #04AA6D;
             color: white;
         }
-    table {
+   /* table {
         font-family: arial, sans-serif;
         border-collapse: collapse;
         width: 100%;
@@ -115,5 +160,5 @@
 
     tr:nth-child(even) {
         background-color: #eff6fe;
-    }
+    }*/
 </style>

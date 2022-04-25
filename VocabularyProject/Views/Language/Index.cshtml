@@ -18,7 +18,7 @@
             <th>ID</th>
             <th>DIL KODU</th>
             <th>DILIN ADI</th>
-            <th style="text-align:center ">EDIT-DETAILS-DELETE </th>
+            <th style="text-align:center ">EDIT-DELETE </th>
         </tr>
         @{
             foreach (LanguageViewModel item in Model)
@@ -30,7 +30,7 @@
                     <td>
                         <div class="text-center">
                             <a asp-route-id="@item.Id" class="btn btn-info" asp-action="Edit">EDIT</a>
-                            <a asp-route-id="@item.Id" class="btn btn-info" asp-action="Details">DETAILS</a>
+                            @*<a asp-route-id="@item.Id" class="btn btn-info" asp-action="Details">DETAILS</a>*@
                             <a class="btn btn-warning " style="margin-left:5px" asp-route-id="@item.Id" asp-action="Delete">DELETE</a>
                         </div>
                     </td>
