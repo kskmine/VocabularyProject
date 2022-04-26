@@ -25,7 +25,7 @@ namespace VocabularyProject.Controllers
             _wordDefinitionRepository = wordDefinitionRepository;
             _languageRepository = languageRepository;
         }
-        // GET: WordMeaningController
+        // GET: LanguageController
         public ActionResult Index()
         {
             List<WordMeaningViewModel> model = new List<WordMeaningViewModel>();
@@ -37,7 +37,18 @@ namespace VocabularyProject.Controllers
             return View(model);
         }
 
-        // GET: WordMeaningController/Edit/5
+        public IActionResult ListPartial(int defId)
+        {
+            List<WordMeaningViewModel> model = new List<WordMeaningViewModel>();
+
+            List<WordMeaning> liste = _repository.ListByDefId(defId);
+            var serializedText = JsonSerializer.Serialize(liste);
+            model = JsonSerializer.Deserialize<List<WordMeaningViewModel>>(serializedText);
+
+            return PartialView(model);
+        }
+
+        // GET: LanguageController/Edit/5
         public ActionResult Edit(int? id)
         {
             WordMeaningViewModel model = new WordMeaningViewModel();
@@ -63,7 +74,7 @@ namespace VocabularyProject.Controllers
             return View(model);
         }
 
-        // POST: WordMeaningController/Edit/5
+        // POST: LanguageController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(WordMeaningViewModel model)
@@ -84,7 +95,7 @@ namespace VocabularyProject.Controllers
             return RedirectToAction("Index");
         }
 
-        // GET: WordMeaningController/Delete/5
+        // GET: LanguageController/Delete/5
         public ActionResult Delete(int id)
         {
             _repository.Delete(id);
