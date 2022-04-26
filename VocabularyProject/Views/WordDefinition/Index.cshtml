@@ -1,125 +1,34 @@
 ﻿@model IEnumerable<VocabularyProject.Models.WordDefinitionViewModel>
 
-@{
-    ViewData["Title"] = "Index";
-}
+@{ ViewData["Title"] = "Index"; }
 
 <h1>WORD DEFINITION PAGE</h1>
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-2">
         <p>
             <a asp-action="Edit">Yeni Kelime Ekle</a>
         </p>
     </div>
-    @*<div class="col-md-6"><input type="text" class="form-control"></div>
-    <div class="col-md-2"><button type="button" class="btn btn"></div>*@
-    <div class="example" action="/action_page.php">
-        <input type="text" placeholder="Search.." name="search">
-        <button type="submit"><i class="fa fa-search"></i></button>
+    <div class="col-md-6"><input id="searchKeyword" onkeypress="refreshByKey(event)" type="text" class="form-control" /></div>
+    <div class="col-md-2">
+        <button type="button" onclick="refresh()" class="btn btn">
+            <i class="bi bi-search"></i>
+        </button>
     </div>
 </div>
-
-
-<div>
-    <h2>Kelime</h2>
-
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>KELIME</th>
-            <th>DIL ID'Sİ</th>
-            <th style="text-align:center ">EDIT-DELETE </th>
-        </tr>
-        @{int counter = 0; }
-        @{
-            foreach (WordDefinitionViewModel item in Model)
-            {
-                string bgColor = "cursor:pointer;";// " background-color: #f2f2f2;";
-                if (counter % 2 == 0)
-                {
-                    bgColor += " background-color: #f2f2f2;";
-                }
-               <tr class="trMaster" style="@bgColor" onclick="showHideDetail('@Html.Raw($"det_{item.Id}")')">
-                    <td>@item.Id</td>
-                    <td>@item.Word</td>
-                    @*<td>@item.LangName</td>*@
-                    <td title="@item.LangName"></td>
-                    <td>
-                        <div class="text-center">
-                            <a asp-route-id="@item.Id" class="btn btn-info" asp-action="Edit">EDIT</a>
-                            @*<a asp-route-id="@item.Id" class="btn btn-info" asp-action="Details">DETAILS</a>*@
-                            <a class="btn btn-warning " style="margin-left:5px" asp-route-id="@item.Id" asp-action="Delete">DELETE</a>
-                        </div>
-                    </td>
-                </tr>
-                <tr id="@Html.Raw("det_"+item.Id)" style="display:none">
-                    <td colspan="4">
-                        <table>
-                            <tr>
-                                <th>Meaning</th>
-                                <th>Lang</th>
-                            </tr>
-                            @foreach (var meanin in item.Meanings)
-                            {
-                                <tr>
-                                    <td>@meanin.Meaning</td>
-                                    <td title="@meanin.SelectedLang.Name">@meanin.SelectedLang.Code</td>
-                                </tr>
-                            }
-                        </table>
-                    </td>
-                </tr>
-
-            }
-            counter++;
-        }
-        
-    </table>
+@*<div id="loading">
+        <img height="130" src="~/images/Loading_icon.gif" />
+    </div>*@
+<div id="listTable">
+    @*<partial name="ListPartial" model="Model"  />*@
 </div>
 
-@section Scripts{ 
-    <script>
-        function showHideDetail(elemId) {
-            $("#" + elemId).toggle();
-        }
-        function refresh() {
-            var searchKeyword = $('#searchKeyword').val();
-         //   window.location.href = '/WordDefinition/Index?searchKeyword=' + searchKeyword
-        }
-    </script>
-}
+
+
+
 
 <style>
-    form.example input[type=text] {
-        padding: 10px;
-        font-size: 17px;
-        border: 1px solid grey;
-        float: left;
-        width: 80%;
-        background: #f1f1f1;
-    }
-
-    form.example button {
-        float: left;
-        width: 20%;
-        padding: 10px;
-        background: #2196F3;
-        color: white;
-        font-size: 17px;
-        border: 1px solid grey;
-        border-left: none;
-        cursor: pointer;
-    }
-
-        form.example button:hover {
-            background: #0b7dda;
-        }
-
-    form.example::after {
-        content: "";
-        clear: both;
-        display: table;
-    }
+   
     #wordsTable {
         font-family: Arial, Helvetica, sans-serif;
         border-collapse: collapse;
@@ -132,9 +41,9 @@
         }
 
         /* #wordsTable tr:nth-child(even) {
-                background-color: #f2f2f2;
-            }
-*/
+                background - color: #f2f2f2;
+                    }
+            */
         #wordsTable .trMaster:hover {
             background-color: #ddd;
         }
@@ -146,19 +55,51 @@
             background-color: #04AA6D;
             color: white;
         }
-   /* table {
-        font-family: arial, sans-serif;
-        border-collapse: collapse;
-        width: 100%;
-    }
+    /* table {
+                font - family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+            }
 
-    td, th {
-        border: 1px solid #eff6fe;
-        text-align: left;
-        padding: 8px;
-    }
+            td, th {
+                border: 1px solid #eff6fe;
+            text-align: left;
+            padding: 8px;
+            }
 
-    tr:nth-child(even) {
-        background-color: #eff6fe;
-    }*/
+            tr:nth-child(even) {
+                background - color: #eff6fe;
+            }*/
 </style>
+
+@section Scripts{
+    <script>
+        function showHideDetail(elemId) {
+            $("#" + elemId).toggle();
+        }
+        function refresh() {
+            $('#loading').show();
+            $('#listTable').html(' <img height="130" src="/images/Loading_icon.gif" />');
+            var searchKeyword = $('#searchKeyword').val();
+
+            $('#listTable').load('/WordDefinition/ListPartial', { 'searchKeyword': searchKeyword });
+            // window.location.href = '/WordDefinition/Index?searchKeyword=' + searchKeyword;
+            //$('#listTable').load('/WordDefinition/ListPartial?searchKeyword=' + searchKeyword
+            //    , {}, function () { $('#loading').hide(); }
+            //);
+
+        }
+
+        function refreshByKey(e) {
+            if (e.keyCode === 13) {
+                e.preventDefault();
+                refresh();
+            }
+        }
+
+        $(document).ready(function () {
+            refresh();
+        });
+
+    </script>
+}

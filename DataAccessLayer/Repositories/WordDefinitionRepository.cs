@@ -21,15 +21,17 @@ namespace DataAccessLayer.Repositories
         public override List<WordDefinition> List()
         {
             var liste = _context.Set<WordDefinition>().Include(c => c.Lang)
-                .Include(c=>c.WordMeanings).ThenInclude(c=>c.Lang).ToList();
+                .Include(c => c.WordMeanings).ThenInclude(c => c.Lang).ToList();
             return liste;
         }
 
         public List<WordDefinition> List(string searchKeyword)
         {
             var liste = _context.Set<WordDefinition>().Include(c => c.Lang)
-               .Include(c => c.WordMeanings).ThenInclude(c => c.Lang).ToList();
-              // .Where(c=>c.Word.ToUpper()==searchKeyword(ToUpper)|| ;
+                .Include(c => c.WordMeanings).ThenInclude(c => c.Lang)
+                .Where(c => c.Word.ToUpper() == searchKeyword.ToUpper()
+                || String.IsNullOrEmpty(searchKeyword))
+                .ToList();
             return liste;
         }
 

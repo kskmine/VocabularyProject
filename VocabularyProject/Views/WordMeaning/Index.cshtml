@@ -13,7 +13,7 @@
 <div>
     <h2>Kelime Anlamı</h2>
 
-    <table>
+    <table class="table" id="wordsTable">
         <tr>
             <th>ID</th>
             <th>KELIMENIN ANLAMI</th>
@@ -21,46 +21,54 @@
             <th>KELIMENIN ANLAMI ID</th>
             <th style="text-align:center ">EDIT-DELETE </th>
         </tr>
-        @{
-            foreach (WordMeaningViewModel item in Model)
-            {
-                <tr>
-                    <td>@item.Id</td>
-                    <td>@item.Meaning</td>
-                    @*<td>@item.LangId</td>
-        <td>@item.WordDefinitionId</td>*@
-                    <td>@item.SelectedWordDefinition.Word</td>
-                    <td title="@item.SelectedLang.Name">
-                        @Html.DisplayFor(modelItem => item.SelectedLang.Code)
-                    </td>
-                    <td>
-                        <div class="text-center">
-                            <a asp-route-id="@item.Id" class="btn btn-info" asp-action="Edit">EDIT</a>
-                            @*<a asp-route-id="@item.Id" class="btn btn-info" asp-action="Details">DETAILS</a>*@
-                            <a class="btn btn-warning " style="margin-left:5px" asp-route-id="@item.Id" asp-action="Delete">DELETE</a>
-                        </div>
-                    </td>
-                </tr>
-            }
-        }
-        <
+        @{ foreach (WordMeaningViewModel item in Model)
+                        {
+            <tr class="trMaster">
+                <td>@item.Id</td>
+                <td>@item.Meaning</td>
+                @*<td>@item.LangId</td>
+                <td>@item.WordDefinitionId</td>*@
+                <td>@item.SelectedWordDefinition.Word</td>
+                <td title="@item.SelectedLang.Name">
+                    @Html.DisplayFor(modelItem => item.SelectedLang.Code)
+                </td>
+                <td>
+                    <div class="text-center">
+                        <a asp-route-id="@item.Id" class="btn btn-info" asp-action="Edit">EDIT</a>
+                        @*<a asp-route-id="@item.Id" class="btn btn-info" asp-action="Details">DETAILS</a>*@
+                        <a class="btn btn-info " style="margin-left:5px" asp-route-id="@item.Id" asp-action="Delete">DELETE</a>
+                    </div>
+                </td>
+            </tr> } }
+
     </table>
 </div>
 
 <style>
-    table {
-        font-family: arial, sans-serif;
+    #wordsTable {
+        font-family: Arial, Helvetica, sans-serif;
         border-collapse: collapse;
         width: 100%;
     }
 
-    td, th {
-        border: 1px solid #eff6fe;
-        text-align: left;
-        padding: 8px;
-    }
+        #wordsTable td, #customers th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
 
-    tr:nth-child(even) {
-        background-color: #eff6fe;
-    }
+        /* #wordsTable tr:nth-child(even) {
+                        background-color: #f2f2f2;
+                    }
+        */
+        #wordsTable .trMaster:hover {
+            background-color: #ddd;
+        }
+
+        #wordsTable th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #3a2860;
+            color: white;
+        }
 </style>

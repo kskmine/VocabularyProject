@@ -20,12 +20,19 @@ namespace VocabularyProject.Controllers
             _repository = repository;
             _langRepository = langRepository;
         }
-        // GET: WordDefinitionController
+        // GET: LanguageController
         public ActionResult Index()
+        {
+            return View();
+        }
+
+        public IActionResult ListPartial(string searchKeyword)
         {
             List<WordDefinitionViewModel> model = new List<WordDefinitionViewModel>();
 
-            List<WordDefinition> liste = _repository.List();
+            List<WordDefinition> liste = searchKeyword != null ?
+                                        _repository.List(searchKeyword) :
+                                        _repository.List();
 
             foreach (WordDefinition item in liste)
             {
@@ -54,14 +61,12 @@ namespace VocabularyProject.Controllers
                             Name = meaning.Lang.Name
                         }
                     });
-                };
+                }
 
                 model.Add(lwm);
             }
-            return View(model);
+            return PartialView(model);
         }
-
-
         // GET: WordDefinitionController/Edit/5
         public ActionResult Edit(int? id)
         {
