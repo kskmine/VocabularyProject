@@ -32,6 +32,11 @@ namespace DataAccessLayer.Repositories
             return _context.Set<WordMeaning>().Include(c => c.Lang).Where(c => c.WordDefinitionId == defId).ToList();
         }
 
+        public void Remove(int id)
+        {
+          // return _context.Set<WordMeaning>().Include(c => c.LangId).ToList();
+        }
+
 
 
         //public void Add(WordMeaning entity)

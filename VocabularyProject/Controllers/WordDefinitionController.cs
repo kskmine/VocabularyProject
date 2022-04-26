@@ -61,7 +61,8 @@ namespace VocabularyProject.Controllers
                             Name = meaning.Lang.Name
                         }
                     });
-                }
+
+                    }
 
                 model.Add(lwm);
             }
@@ -115,6 +116,46 @@ namespace VocabularyProject.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult Remove()
+        {
+            List<WordDefinitionViewModel> model = new List<WordDefinitionViewModel>();
+
+            List<WordDefinition> liste =  _repository.List();
+
+            foreach (WordDefinition item in liste)
+            {
+                WordDefinitionViewModel lwm = new WordDefinitionViewModel()
+                {
+                    Id = item.Id,
+                    Word = item.Word,
+                    LangId = item.LangId,
+                    LangCode = item.Lang.Code,
+                    LangName = item.Lang.Name,
+                    Meanings = new List<WordMeaningViewModel>()
+                };
+
+                foreach (var meaning in item.WordMeanings)
+                {
+                    lwm.Meanings.Remove(new WordMeaningViewModel()
+                    {
+                        Id = meaning.Id,
+                        LangId = meaning.LangId,
+                        Meaning = meaning.Meaning,
+                        WordDefinitionId = meaning.WordDefinitionId,
+                        SelectedLang = new LanguageViewModel()
+                        {
+                            Code = meaning.Lang.Code,
+                            Id = meaning.Lang.Id,
+                            Name = meaning.Lang.Name
+                        }
+                    });
+
+                }
+
+                model.Add(lwm);
+            }
+            return PartialView(model);
+        }
         // POST: WordDefinitionController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]

@@ -10,10 +10,15 @@
         </p>
     </div>
     <div class="col-md-6"><input id="searchKeyword" onkeypress="refreshByKey(event)" type="text" class="form-control" /></div>
-    <div class="col-md-2">
+    <div class="col-md-1">
+        <select class="form-control" id="MeaninLangId" name="MeaninLangId">
+            <option title="Turkish" value="1">tr</option>
+            <option title="English" value="2">eng</option>
+        </select>
         <button type="button" onclick="refresh()" class="btn btn">
             <i class="bi bi-search"></i>
         </button>
+
     </div>
 </div>
 @*<div id="loading">

@@ -39,6 +39,7 @@
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
+          
         </form>
     </div>
     <div class="col-md-1"></div>
@@ -56,7 +57,8 @@
                     </select>
                 </div>
                 <div class="col-md-1"><input onclick="AddNewMeaning()" type="button" value="Kaydet" /></div>
-                <div class="col-md-5"></div>
+                <div class="col-md-1"></div>
+                <div class="col-md-4"><input onclick="DeleteMeaning()" type="button" value="Sil" /></div>
 
             </div>
         }
@@ -70,7 +72,7 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script>
+<script>
     $().ready(function () {
         @if (Model.Id > 0)
             {
@@ -98,6 +100,26 @@
                     }
             });
         }
-    </script>
+
+    function DeleteMeaning() {
+            let data = {
+                "WordDefinitionId":@Model.Id,
+                "Meaning": $('#newMeaning').val(),
+                "LangId": $('#MeaninLangId').val()
+            }
+            console.log(data);
+        $.post("/WordMeaning/DeleteMeaningToWord", data,
+                function (res) {
+                    console.log(res);
+                    if (res.success == true) {
+                        alert("Kayıt Silindi.");
+                         $("#ListMeaningPartial").load("/WordMeaning/ListPartial", { "defId":@Model.Id})
+                    }
+                    else {
+                        alert(res.message);
+                    }
+            });
+        }
+</script>
 
 }

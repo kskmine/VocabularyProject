@@ -11,6 +11,8 @@ namespace DataAccessLayer.Interfaces
     public interface IWordMeaningRepository:IRepositoryBase<WordMeaning>
     {
         List<WordMeaning> ListByDefId(int defId);
+        public void Remove(int id);
+
         //public List<WordMeaning> List();
         //public WordMeaning GetById(int id);
         //public void Add(WordMeaning entity);
