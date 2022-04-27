@@ -6,7 +6,7 @@
 
 <h1>Edit</h1>
 
-@*<h4>WordDefinitionViewModel</h4>*@
+<h4>WordDefinitionViewModel</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -25,6 +25,7 @@
                 <input asp-for="Word" class="form-control" />
                 <span asp-validation-for="Word" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="LangId" class="control-label"></label>
                 @*  <input asp-for="LangId" class="form-control" />*@
@@ -39,7 +40,6 @@
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
-          
         </form>
     </div>
     <div class="col-md-1"></div>
@@ -57,8 +57,7 @@
                     </select>
                 </div>
                 <div class="col-md-1"><input onclick="AddNewMeaning()" type="button" value="Kaydet" /></div>
-                <div class="col-md-1"></div>
-                <div class="col-md-4"><input onclick="DeleteMeaning()" type="button" value="Sil" /></div>
+                <div class="col-md-5"></div>
 
             </div>
         }
@@ -72,54 +71,42 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-<script>
+    <script>
     $().ready(function () {
         @if (Model.Id > 0)
             {
          <Text>
-        $("#ListMeaningPartial").load("/WordMeaning/ListPartial", { "defId":@Model.Id})
+        refresh();
         </Text>
                 }
     });
+
         function AddNewMeaning() {
+
             let data = {
                 "WordDefinitionId":@Model.Id,
                 "Meaning": $('#newMeaning').val(),
                 "LangId": $('#MeaninLangId').val()
             }
+
             console.log(data);
             $.post("/WordMeaning/AddNewMeaningToWord", data,
                 function (res) {
                     console.log(res);
                     if (res.success == true) {
                         alert("Kayıt Başarılı");
-                         $("#ListMeaningPartial").load("/WordMeaning/ListPartial", { "defId":@Model.Id})
+                        refresh();
                     }
                     else {
                         alert(res.message);
                     }
             });
-        }
 
-    function DeleteMeaning() {
-            let data = {
-                "WordDefinitionId":@Model.Id,
-                "Meaning": $('#newMeaning').val(),
-                "LangId": $('#MeaninLangId').val()
-            }
-            console.log(data);
-        $.post("/WordMeaning/DeleteMeaningToWord", data,
-                function (res) {
-                    console.log(res);
-                    if (res.success == true) {
-                        alert("Kayıt Silindi.");
-                         $("#ListMeaningPartial").load("/WordMeaning/ListPartial", { "defId":@Model.Id})
-                    }
-                    else {
-                        alert(res.message);
-                    }
-            });
-        }
-</script>
+    }
+    function refresh() {
+         $("#ListMeaningPartial").load("/WordMeaning/ListPartial", { "defId":@Model.Id})
+    }
+
+    </script>
 
 }

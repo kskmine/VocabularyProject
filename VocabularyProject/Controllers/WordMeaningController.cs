@@ -110,26 +110,17 @@ namespace VocabularyProject.Controllers
             return Json(new { success = true });
         }
 
-        [HttpPost]
-        public JsonResult DeleteMeaningToWord(WordMeaningViewModel model,int id)
-        {
-            //if (String.IsNullOrWhiteSpace(model.Meaning))
-            //    return Json(new { success = false, message = "anlam boş olamaz" });
-
-            WordMeaning entity = new WordMeaning();
-            entity.LangId = model.LangId;
-            entity.Meaning = model.Meaning;
-            entity.WordDefinitionId = model.WordDefinitionId;
-            _repository.Remove(id);
-            // return Json(new { success = true });
-            return Json(new { success = true });
-        }
-
         // GET: LanguageController/Delete/5
         public ActionResult Delete(int id)
         {
             _repository.Delete(id);
             return RedirectToAction("Index");
+        }
+
+        public IActionResult DeleteByAjax(int id)
+        {
+            _repository.Delete(id);
+            return Json(true);
         }
 
     }
