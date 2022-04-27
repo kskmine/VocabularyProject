@@ -71,8 +71,8 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script>
-    $().ready(function () {
+<script>
+   $().ready(function () {
         @if (Model.Id > 0)
             {
          <Text>
@@ -80,15 +80,12 @@
         </Text>
                 }
     });
-
         function AddNewMeaning() {
-
             let data = {
                 "WordDefinitionId":@Model.Id,
                 "Meaning": $('#newMeaning').val(),
                 "LangId": $('#MeaninLangId').val()
             }
-
             console.log(data);
             $.post("/WordMeaning/AddNewMeaningToWord", data,
                 function (res) {
@@ -101,12 +98,12 @@
                         alert(res.message);
                     }
             });
-
     }
     function refresh() {
          $("#ListMeaningPartial").load("/WordMeaning/ListPartial", { "defId":@Model.Id})
     }
 
-    </script>
+
+</script>
 
 }

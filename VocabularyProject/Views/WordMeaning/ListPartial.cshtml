@@ -2,6 +2,8 @@
 @*<p>
         <a asp-action="Create">Create New</a>
     </p>*@
+
+
 <table class="table">
     <thead>
         <tr>
@@ -36,27 +38,67 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.WordDefinitionId)
                 </td>
-                <td><i class="bi bi-trash" onclick="DeleteMeaning(@item.Id)"></i></td>
-
+                <td>
+                    @*<td><i class="bi bi-trash" onclick="DeleteMeaning(@item.Id)"></i></td>*@
+                    <i class="bi bi-trash" onclick="DeleteMeaningPopUp(@item.Id)"></i>
+                </td>
             </tr>
         }
-        
+
     </tbody>
 </table>
+<div id="myModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Sil?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>silmek istediğinize Emin misiniz?</p>
+            </div>
+            <div class="modal-footer">
+                <button onclick="DeleteMeaning(idToDelete)" data-dismiss="modal" type="button" class="btn btn-primary">Evet</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">İptal</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script>
-        function DeleteMeaning(id){
-        $.post("/WordMeaning/DeleteByAjax", {"id":id},
-                function (res) {
-                    console.log(res);
-                    if (res == true) {
-                        refresh();
-                    }
-                    else {
-                        alert("beklenmedik hata");
-                    }
+    var idToDelete;
+    function DeleteMeaningPopUp(id) {
+        idToDelete = id;
+        $('#myModal').modal('show');
+    }
+    function DeleteMeaning(id) {
+        $.post("/WordMeaning/DeleteByAjax", { "id": id },
+            function (res) {
+
+                console.log(res);
+                if (res == true) {
+                    refresh();
+                }
+                else {
+                    alert("beklenmedik hata");
+                }
             });
     }
+    //function DeleteMeaning(id) {
+    //    $.post("/WordMeaning/DeleteByAjax", { "id": id },
+    //        function (res) {
+    //            console.log(res);
+    //            if (res == true) {
+    //                refresh();
+    //            }
+    //            else {
+    //                alert("beklenmedik hata");
+    //            }
+    //        });
+    //}
 </script>
 
 
