@@ -39,16 +39,9 @@ namespace VocabularyProject.API
         [HttpPost]
         public bool Post([FromForm] Language entity)
         {
-            //if (entity.Id>0)
-            //{
-            //    _repository.Update(entity);
-            //}
-            //else
-            //{
-            //    _repository.Add(entity);
-            //}
+           
             _repository.Add(entity);
-            return true;
+            return Created("", true);
         }
 
         // PUT api/<LangController>/5
@@ -61,8 +54,20 @@ namespace VocabularyProject.API
 
         // DELETE api/<LangController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
+            try
+            {
+                _repository.Delete(id);
+            }
+            catch (Exception)
+            {
+
+                //   return StatusCode(403);
+                return Forbid();
+            }
+            return Ok(true);
+
         }
     }
 }

@@ -33,7 +33,7 @@
 
         function Save() {
             console.log("save executed: ");
-            console.log("id "+$('#langId').val());
+            console.log("id " + $('#langId').val());
             console.log("code " + $('#txtCode').val());
             console.log("name " + $('#txtName').val());
 
@@ -42,34 +42,35 @@
                 "code": $('#txtCode').val(),
                 "name": $('#txtName').val()
             }
-
-            if ($('#langId').val() > 0) {
+           
+            if($('#langId').val() > 0) {
                 $.ajax({
                     type: "PUT",
-                    url: "/api/lang" + $('#langId').val(),
+                    url: "/api/lang/" + $('#langId').val(),
                     data: data,
                     success: function (data) {
                         if (data)
-                            alert("Kayıt başarılı");
+                            alert("KAyıt başarılı");
                         getLangData();
                     },
                     dataType: "JSON"
                 });
             }
-            else {
+        else {
                 $.ajax({
                     type: "POST",
                     url: "/api/lang",
                     data: data,
                     success: function (data) {
                         if (data)
-                            alert("Kayıt başarılı");
+                            alert("KAyıt başarılı");
                         getLangData();
                     },
                     dataType: "JSON"
                 });
             }
-             ////////////////////////////POSTİSLEMLERİ/////////////////////
+        }
+            ////////////////////////////POSTİSLEMLERİ/////////////////////
             //$.ajax({
             //    type: "POST",
             //    url: "/api/lang",
@@ -81,11 +82,9 @@
             //    },
             //    dataType: "JSON"
             //});
-        }
-           
-       
-
-
+        
+        
+          
         function getLangData() {
            
                 // $.get("/api/lang", {}, function (res))
@@ -99,7 +98,7 @@
                         $('#langBody').html("");
                         res.map(function (lng) {
                             //   $('#divLangList').append("<div>"+lng.code+" : "+lng.name+"</div>")
-                            $('#langBody').append("<tr><td><input type='button' onclick=edit('" + lng.id + "','" + lng.code + "','" + lng.name + "') value='Edit' /></<td>" + lng.id + "</td><td>" + lng.code + "</td><td>" + lng.name + "</td></tr>")
+                            $('#langBody').append("<tr><td><input type='button' onclick=deleteLang('" + lng.id + "') value='Sil' /><input type='button' onclick=edit('" + lng.id + "','" + lng.code + "','" + lng.name + "') value='Edit' /></<td>" + lng.id + "</td><td>" + lng.code + "</td><td>" + lng.name + "</td></tr>")
                         });
                     },
                         /////Başka bir yöntem //Apiyi ekranda göstermek
@@ -115,6 +114,31 @@
                     dataType: "JSON"
                 });
         }
+
+        function deleteLang(id) {
+            //   alert(id + "silinecek");
+            $.ajax({
+                type: "DELETE",
+                url: "/api/lang/" + id,
+                success: function (data, textstatus, xhr) {
+                    console.log(textstatus);
+                    console.log(xhr);
+                    if (xhr.status == 200) {
+                        if (data)
+                            alert("silindi");
+                        getLangData();
+                    }
+                    else {
+                        alert("hata oluştu");
+                    }
+                },
+                error: function (data) {
+                    alert("error");
+                },
+                dataType: "JSON"
+            });
+        }
+
 
         function edit(id, code, name) {
             console.log(id + "--" + code + "--" + name);
