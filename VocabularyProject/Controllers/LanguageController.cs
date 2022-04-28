@@ -39,7 +39,11 @@ namespace VocabularyProject.Controllers
             return View(model);
 
         }
-            
+
+        public ActionResult Index1()
+        {
+            return View();
+        }
 
         // GET: LanguageController/Details/5
         public ActionResult Details(int id)
