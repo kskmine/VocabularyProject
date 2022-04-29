@@ -37,7 +37,7 @@ namespace VocabularyProject.API
 
         // POST api/<LangController>
         [HttpPost]
-        public bool Post([FromForm] Language entity)
+        public IActionResult Post([FromForm] Language entity)
         {
            
             _repository.Add(entity);

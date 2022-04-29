@@ -20,7 +20,6 @@
             <th>DILIN ADI</th>
         </tr>
         <tbody id="langBody">
-          
         </tbody>
     </table>
 </div>
@@ -30,20 +29,17 @@
 {
     <script>
         $(document).ready(getLangData);
-
         function Save() {
-            console.log("save executed: ");
-            console.log("id " + $('#langId').val());
-            console.log("code " + $('#txtCode').val());
-            console.log("name " + $('#txtName').val());
-
+            console.log("save executed:")
+            console.log("ID:" + $('#langId').val());
+            console.log("code:" + $('#txtCode').val());
+            console.log("name:" + $('#txtName').val());
             var data = {
                 "id": $('#langId').val(),
                 "code": $('#txtCode').val(),
                 "name": $('#txtName').val()
             }
-           
-            if($('#langId').val() > 0) {
+            if ($('#langId').val() > 0) {
                 $.ajax({
                     type: "PUT",
                     url: "/api/lang/" + $('#langId').val(),
@@ -56,7 +52,7 @@
                     dataType: "JSON"
                 });
             }
-        else {
+            else {
                 $.ajax({
                     type: "POST",
                     url: "/api/lang",
@@ -70,51 +66,21 @@
                 });
             }
         }
-            ////////////////////////////POSTİSLEMLERİ/////////////////////
-            //$.ajax({
-            //    type: "POST",
-            //    url: "/api/lang",
-            //    data: data,
-            //    success: function (data) {
-            //        if (data)
-            //            alert("Kayıt başarılı");
-            //        getLangData();
-            //    },
-            //    dataType: "JSON"
-            //});
-        
-        
-          
         function getLangData() {
-           
-                // $.get("/api/lang", {}, function (res))
-                // $.get(('divLangList').html(result));
-                $.ajax({
-                    url: "/api/lang",
-                    data: null,
-                    success: function (res) {
-                         console.log(res);
-                         $('#langBody').html("");
-                        $('#langBody').html("");
-                        res.map(function (lng) {
-                            //   $('#divLangList').append("<div>"+lng.code+" : "+lng.name+"</div>")
-                            $('#langBody').append("<tr><td><input type='button' onclick=deleteLang('" + lng.id + "') value='Sil' /><input type='button' onclick=edit('" + lng.id + "','" + lng.code + "','" + lng.name + "') value='Edit' /></<td>" + lng.id + "</td><td>" + lng.code + "</td><td>" + lng.name + "</td></tr>")
-                        });
-                    },
-                        /////Başka bir yöntem //Apiyi ekranda göstermek
-                        //console.log(res);
-                        //$('#langBody').html("");
-
-                        //// $('#divLangList').html(JSON.stringify(res));
-                        //res.map(function (lng) {
-                        //    // $('#divLangList').append("<div>" + lng.code + " : " + lng.name + "</div>")
-                        //    $('#langBody').append("<tr><td>" + lng.id + "</td><td>" + lng.code + "</td><td>" + lng.name + "</td></tr>");
-                        //});
-                    
-                    dataType: "JSON"
-                });
+            $.ajax({
+                url: "/api/lang",
+                data: null,
+                success: function (res) {
+                    console.log(res);
+                    $('#langBody').html("");
+                    res.map(function (lng) {
+                        //   $('#divLangList').append("<div>"+lng.code+" : "+lng.name+"</div>")
+                        $('#langBody').append("<tr><td><input type='button' onclick=deleteLang('" + lng.id + "') value='sil' /><input type='button' onclick=edit('" + lng.id + "','" + lng.code + "','" + lng.name + "') value='Edit' /></<td>" + lng.id + "</td><td>" + lng.code + "</td><td>" + lng.name + "</td></tr>")
+                    });
+                },
+                dataType: "JSON"
+            });
         }
-
         function deleteLang(id) {
             //   alert(id + "silinecek");
             $.ajax({
@@ -138,13 +104,29 @@
                 dataType: "JSON"
             });
         }
-
-
         function edit(id, code, name) {
             console.log(id + "--" + code + "--" + name);
             $('#langId').val(id);
             $('#txtCode').val(code);
             $('#txtName').val(name);
         }
+
+
+         ////////////////////////////POSTİSLEMLERİ/////////////////////
+        //$.ajax({
+        //    type: "POST",
+        //    url: "/api/lang",
+        //    data: data,
+        //    success: function (data) {
+        //        if (data)
+        //            alert("Kayıt başarılı");
+        //        getLangData();
+        //    },
+        //    dataType: "JSON"
+        //});
+
+
     </script>
 }
+       
+
